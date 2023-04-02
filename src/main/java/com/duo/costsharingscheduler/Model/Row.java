@@ -5,10 +5,11 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "valueFields")
+@Table(name = "rows")
 @Getter
 @Setter
 @Builder
@@ -17,10 +18,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @ToString
 @DynamicInsert
-public class ValueField {
+public class Row {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private BigDecimal valueFiled;
+    private String title;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<ValueField> valueFieldList = new ArrayList<>();
 }

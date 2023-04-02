@@ -1,12 +1,24 @@
 package com.duo.costsharingscheduler.Model;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "schedulers")
+@Getter
+@Setter
+@Builder
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@DynamicInsert
+
 public class Scheduler {
 
     @Id
@@ -15,48 +27,11 @@ public class Scheduler {
 
     private String title;
 
-    @OneToMany(
-            mappedBy = "scheduler",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<GroupsOfCells> columns = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Column> columns = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "scheduler",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<GroupsOfCells> rows = new ArrayList<>();
-
-    public Scheduler() {
-    }
-
-    public Scheduler(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<GroupsOfCells> getColumns() {
-        return columns;
-    }
-
-    public void setColumns(List<GroupsOfCells> columns) {
-        this.columns = columns;
-    }
-
-    public List<GroupsOfCells> getRows() {
-        return rows;
-    }
-
-    public void setRows(List<GroupsOfCells> rows) {
-        this.rows = rows;
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Row> rows = new ArrayList<>();
 }

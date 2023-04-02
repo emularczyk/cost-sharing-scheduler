@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Harmonogram</title>
+</head>
+<body>
+<h3>Tabela</h3>
+<span th:text="${scheduler.title}"/>
+<span th:text="${scheduler}"/>
+<hr>
+<table border="1">
+    <thead>
+
+    <tr>
+        <th></th>
+        <th th:each="column:${scheduler.columns}">
+            <span th:text="${column.title}"/>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row:${scheduler.rows}">
+        <td><span th:text="${row.title}"/></td>
+        <td th:each="filed:${row.valueFieldList}">
+            <span th:text="${filed.valueFiled}"/>
+
+    </tr>
+    </tbody>
+
+</table>
+
+<span th:text="${scheduler2.title}"/>
+<span th:text="${scheduler2}"/>
+
+<table border="1">
+    <thead>
+
+    <tr>
+        <th></th>
+        <th th:each="column:${scheduler2.columns}">
+            <span th:text="${column.title}"/>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row:${scheduler2.rows}">
+        <td><span th:text="${row.title}"/></td>
+        <td th:each="filed:${row.valueFieldList}">
+            <span th:text="${filed.valueFiled}"/>
+
+    </tr>
+    </tbody>
+
+</table>
+
+
+</body>
+
+</html>
