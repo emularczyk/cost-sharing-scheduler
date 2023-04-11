@@ -1,5 +1,3 @@
-# cost-sharing-scheduler
-
 # Working with the H2 database
 
 1. Go to http://localhost:8080/console.
