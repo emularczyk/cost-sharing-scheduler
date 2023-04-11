@@ -32,22 +32,22 @@ public class SchedulerController {
     @GetMapping ("/generateScheduler")
     public void creteDefaultScheduler(){
         ValueField valueField1 = valueFieldRepository.save(ValueField.builder()
-                .valueFiled(BigDecimal.valueOf(1))
+                .valueFiled(BigDecimal.valueOf(100.0))
                 .build());
         ValueField valueField2 = valueFieldRepository.save(ValueField.builder()
-                .valueFiled(BigDecimal.valueOf(2))
+                .valueFiled(BigDecimal.valueOf(50.0))
                 .build());
         ValueField valueField3 = valueFieldRepository.save(ValueField.builder()
-                .valueFiled(BigDecimal.valueOf(3))
+                .valueFiled(BigDecimal.valueOf(30.0))
                 .build());
         ValueField valueField4 = valueFieldRepository.save(ValueField.builder()
-                .valueFiled(BigDecimal.valueOf(4))
+                .valueFiled(BigDecimal.valueOf(100.0))
                 .build());
         ValueField valueField5 = valueFieldRepository.save(ValueField.builder()
-                .valueFiled(BigDecimal.valueOf(5))
+                .valueFiled(BigDecimal.valueOf(50.0))
                 .build());
         ValueField valueField6 = valueFieldRepository.save(ValueField.builder()
-                .valueFiled(BigDecimal.valueOf(6))
+                .valueFiled(BigDecimal.valueOf(60.0))
                 .build());
 
         Column column1 = columnRepository.save(Column.builder()
@@ -83,6 +83,55 @@ public class SchedulerController {
 
         Scheduler scheduler = schedulerRepository.findById(schedulerId).orElse(null);
         model.addAttribute("scheduler", scheduler);
+        return "scheduler";
+    }
+
+    @GetMapping("/scheduler")
+    public String getScheduler(final Model model) {
+        ValueField valueField1 = valueFieldRepository.save(ValueField.builder()
+                .valueFiled(BigDecimal.valueOf(100.0))
+                .build());
+        ValueField valueField2 = valueFieldRepository.save(ValueField.builder()
+                .valueFiled(BigDecimal.valueOf(50.0))
+                .build());
+        ValueField valueField3 = valueFieldRepository.save(ValueField.builder()
+                .valueFiled(BigDecimal.valueOf(30.0))
+                .build());
+        ValueField valueField4 = valueFieldRepository.save(ValueField.builder()
+                .valueFiled(BigDecimal.valueOf(100.0))
+                .build());
+        ValueField valueField5 = valueFieldRepository.save(ValueField.builder()
+                .valueFiled(BigDecimal.valueOf(50.0))
+                .build());
+        ValueField valueField6 = valueFieldRepository.save(ValueField.builder()
+                .valueFiled(BigDecimal.valueOf(60.0))
+                .build());
+
+        Column column1 = columnRepository.save(Column.builder()
+                .title("Transport costs")
+                .build());
+        Column column2 = columnRepository.save(Column.builder()
+                .title("Hotel costs")
+                .build());
+        Column column3 = columnRepository.save(Column.builder()
+                .title("Attractions costs")
+                .build());
+        Row row1 = rowRepository.save(Row.builder()
+                .title("Adam")
+                .valueFieldList(List.of(valueField1, valueField2,valueField3))
+                .build());
+        Row row2 = rowRepository.save(Row.builder()
+                .title("Ewa")
+                .valueFieldList(List.of(valueField4, valueField5,valueField6))
+                .build());
+
+        Scheduler defaultScheduler = Scheduler.builder()
+                .title("School trip scheduler")
+                .columns(List.of(column1, column2,column3))
+                .rows(List.of(row1, row2))
+                .build();
+
+        model.addAttribute("scheduler", defaultScheduler);
         return "scheduler";
     }
 }
