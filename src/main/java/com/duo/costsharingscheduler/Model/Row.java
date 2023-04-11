@@ -26,6 +26,7 @@ public class Row {
     private String title;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "row_id")
     @ToString.Exclude
     private List<ValueField> valueFieldList = new ArrayList<>();
 }

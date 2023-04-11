@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "schedulers")
+@Table(name = "Schedulers")
 @Getter
 @Setter
 @Builder
@@ -28,10 +28,12 @@ public class Scheduler {
     private String title;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "scheduler_id")
     @ToString.Exclude
     private List<Column> columns = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "scheduler_id")
     @ToString.Exclude
     private List<Row> rows = new ArrayList<>();
 }
