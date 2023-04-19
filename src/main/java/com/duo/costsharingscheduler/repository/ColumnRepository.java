@@ -1,6 +1,6 @@
-package com.duo.costsharingscheduler.Repository;
+package com.duo.costsharingscheduler.repository;
 
-import com.duo.costsharingscheduler.Model.Column;
+import com.duo.costsharingscheduler.model.Column;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
