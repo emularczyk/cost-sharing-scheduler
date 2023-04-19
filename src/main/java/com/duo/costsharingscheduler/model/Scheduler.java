@@ -1,4 +1,4 @@
-package com.duo.costsharingscheduler.Model;
+package com.duo.costsharingscheduler.model;
 
 import jakarta.persistence.*;
 import lombok.*;
