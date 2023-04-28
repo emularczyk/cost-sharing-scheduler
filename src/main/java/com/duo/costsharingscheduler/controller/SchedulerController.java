@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -134,5 +135,63 @@ public class SchedulerController {
             throw new ItemNotFoundException("Can't delete scheduler with id " + schedulerId);
         }
         return "redirect:/schedulers";
+    }
+
+    @GetMapping("/scheduler/{schedulerId}/add/column")
+    public String addColumn(@PathVariable("schedulerId")final Long schedulerId) {
+        Scheduler scheduler = schedulerRepository.findById(schedulerId).orElse(null);
+        List<Column> columnList = scheduler.getColumns();
+        columnList.add(new Column());
+        scheduler.setColumns(columnList);
+        List<ValueField> valueList;
+        for (Row row: scheduler.getRows()) {
+            valueList =row.getValueFieldList();
+            valueList.add(new ValueField());
+            row.setValueFieldList(valueList);
+        }
+       schedulerRepository.save(scheduler);
+        return "redirect:/scheduler/" + scheduler.getId();
+    }
+
+    @GetMapping("/scheduler/{schedulerId}/remove/column")
+    public String removeColumn(@PathVariable("schedulerId")final Long schedulerId) {
+        Scheduler scheduler = schedulerRepository.findById(schedulerId).orElse(null);
+        List<Column> columnList = scheduler.getColumns();
+        columnList.remove(columnList.size()-1);
+        scheduler.setColumns(columnList);
+        List<ValueField> valueList;
+        for (Row row: scheduler.getRows()) {
+            valueList =row.getValueFieldList();
+            valueList.remove(valueList.size()-1);
+            row.setValueFieldList(valueList);
+        }
+       schedulerRepository.save(scheduler);
+        return "redirect:/scheduler/" + scheduler.getId();
+    }
+
+    @GetMapping("/scheduler/{schedulerId}/add/row")
+    public String addRow(@PathVariable("schedulerId")final Long schedulerId) {
+        Scheduler scheduler = schedulerRepository.findById(schedulerId).orElse(null);
+        List<Row> rowList = scheduler.getRows();
+        Row newRow= new Row();
+        List<ValueField> valueList=new ArrayList<>();
+        for (int i=0;i<scheduler.getColumns().size();i++) {
+            valueList.add(new ValueField());
+        }
+        newRow.setValueFieldList(valueList);
+        rowList.add(newRow);
+        scheduler.setRows(rowList);
+        schedulerRepository.save(scheduler);
+        return "redirect:/scheduler/" + scheduler.getId();
+    }
+
+    @GetMapping("/scheduler/{schedulerId}/remove/row")
+    public String removeRow(@PathVariable("schedulerId")final Long schedulerId) {
+        Scheduler scheduler = schedulerRepository.findById(schedulerId).orElse(null);
+        List<Row> rowList = scheduler.getRows();
+        rowList.remove(rowList.size()-1);
+        scheduler.setRows(rowList);
+        schedulerRepository.save(scheduler);
+        return "redirect:/scheduler/" + scheduler.getId();
     }
 }
