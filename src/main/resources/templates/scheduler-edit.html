@@ -11,30 +11,37 @@
 <body>
 <form th:action="@{/scheduler/save}" th:object="${scheduler}" method="post">
     <h3>
-        <input hidden class="text-center" th:field="${scheduler.id}"/>
-        <center><input type="text" class="text-center" th:field="${scheduler.title}"/></center>
+        <input hidden class="col-sm-8 control-label" th:field="${scheduler.id}"/>
+        <div class="form-group form-group-lg">
+            <div class="cos-sm-10">
+                <center><input class="form-control" type="text" th:field="${scheduler.title}"/></center>
+            </div>
+        </div>
+
     </h3>
     <table class="table table-bordered table-striped" border="1">
         <thead class="table-dark">
         <th></th>
         <th th:each="column, status : ${scheduler.columns}">
-            <input hidden th:field="*{columns[__${status.index}__].id}"/>
-            <input type="text" th:field="*{columns[__${status.index}__].title}"/>
+            <input hidden th:field="${scheduler.columns[__${status.index}__].id}"/>
+            <input type="text" th:field="${scheduler.columns[__${status.index}__].title}"/>
         </th>
         </thead>
         <tbody>
         <tr th:each="row, status :${scheduler.rows}">
             <input hidden th:field="${scheduler.rows[__${status.index}__].id}"/>
-            <th><input type="text" th:field="*{rows[__${status.index}__].title}"/></th>
+            <th><input type="text" th:field="${scheduler.rows[__${status.index}__].title}"/></th>
             <th th:each="field, fieldStatus: ${scheduler.rows[__${status.index}__].valueFieldList}">
-                <input hidden th:field="${scheduler.rows[__${status.index}__].valueFieldList[__${fieldStatus.index}__].id}"/>
-                <input type="text" th:field="${scheduler.rows[__${status.index}__].valueFieldList[__${fieldStatus.index}__].valueField}"/>
+                <input hidden
+                       th:field="${scheduler.rows[__${status.index}__].valueFieldList[__${fieldStatus.index}__].id}"/>
+                <input type="text"
+                       th:field="${scheduler.rows[__${status.index}__].valueFieldList[__${fieldStatus.index}__].valueField}"/>
             </th>
         </tr>
         </tbody>
     </table>
-    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-    <button type="reset" class="btn btn-primary">Zresetuj zmiany</button>
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    <button type="reset" class="btn btn-primary">Zresetuj</button>
     <td><a th:href="@{'/scheduler/'+${scheduler.id}}" class="btn btn-warning">Powrót</a></td>
 </form>
 </body>

@@ -29,9 +29,22 @@
     </tr>
     </tbody>
 </table>
-<td><a th:href="@{'/scheduler/edit/'+${scheduler.id}}" class="btn btn-warning">Edytuj</a></td>
+<div class="row">
+    <div class="col-6">
+        <a th:href="@{'/scheduler/edit/'+${scheduler.id}}" class="btn btn-warning">Edytuj</a>
+    </div>
+    <div class="col-6" align="right">
+        <a th:href="@{'/scheduler/'+${scheduler.id}+'/add/row'}" class="btn btn-primary mb-2">
+            Dodaj wiersz</a>
+        <a th:href="@{'/scheduler/'+${scheduler.id}+'/remove/row'}" class="btn btn-primary mb-2">
+            Usuń wiersz</a>
+        <a th:href="@{'/scheduler/'+${scheduler.id}+'/add/column'}" class="btn btn-primary mb-2">
+            Dodaj kolumnę</a>
+        <a th:href="@{'/scheduler/'+${scheduler.id}+'/remove/column'}" class="btn btn-primary mb-2">
+            Usuń kolumnę</a>
+    </div>
+</div>
 <td><a th:href="@{'/schedulers'}" class="btn btn-warning">Strona główna</a></td>
-
 </body>
 
 </html>
