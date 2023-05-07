@@ -23,13 +23,14 @@
     </thead>
     <tbody>
     <tr th:each="row:${scheduler.rows}">
-        <td><span th:text="${row.title}"/></td>
+        <td><span th:text="${row.title}"></span></td>
         <td th:each="field:${row.valueFieldList}">
-            <span th:text="${field.valueField}"/>
+            <span th:text="${field.valueField}"></span>
     </tr>
     </tbody>
 </table>
 <td><a th:href="@{'/scheduler/edit/'+${scheduler.id}}" class="btn btn-warning">Edytuj</a></td>
+<td><a th:href="@{'/schedulers'}" class="btn btn-warning">Strona główna</a></td>
 
 </body>
 
