@@ -1,6 +1,7 @@
 package com.duo.costsharingscheduler.controller;
 
 import com.duo.costsharingscheduler.model.Scheduler;
+import com.duo.costsharingscheduler.model.SchedulerParameters;
 import com.duo.costsharingscheduler.repository.ColumnRepository;
 import com.duo.costsharingscheduler.repository.RowRepository;
 import com.duo.costsharingscheduler.repository.SchedulerRepository;
@@ -53,7 +54,9 @@ public class SchedulerController {
     @GetMapping("/scheduler/{schedulerId}")
     public String getScheduler(final Model model, @PathVariable("schedulerId") final Long schedulerId) {
         Scheduler scheduler = schedulerRepository.findById(schedulerId).orElse(null);
+        SchedulerParameters schedulerParameters = new SchedulerParameters(scheduler);
         model.addAttribute("scheduler", scheduler);
+        model.addAttribute("schedulerParameters", schedulerParameters);
         return "scheduler";
     }
 
