@@ -9,13 +9,11 @@ import com.duo.costsharingscheduler.repository.ColumnRepository;
 import com.duo.costsharingscheduler.repository.RowRepository;
 import com.duo.costsharingscheduler.repository.SchedulerRepository;
 import com.duo.costsharingscheduler.repository.ValueFieldRepository;
+import com.duo.costsharingscheduler.service.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,6 +30,8 @@ public class SchedulerController {
     private ColumnRepository columnRepository;
     @Autowired
     private ValueFieldRepository valueFieldRepository;
+    @Autowired
+    private SchedulerService schedulerService;
 
 
     @GetMapping("/generateScheduler")
@@ -82,6 +82,20 @@ public class SchedulerController {
         schedulerRepository.save(defaultScheduler);
     }
 
+    @GetMapping("/schedulers")
+    public String getMainPage(Model model) {
+        List<Scheduler> schedulers = schedulerService.findAllSchedulers();
+        model.addAttribute("schedulers", schedulers);
+
+        return "schedulers";
+    }
+
+    @PostMapping("/scheduler/addNew")
+    public String newScheduler(String schedulerTitle) {
+        schedulerService.addScheduler(schedulerTitle);
+        return "redirect:/schedulers";
+    }
+
     @GetMapping("/scheduler/{schedulerId}")
     public String getScheduler(final Model model, @PathVariable("schedulerId") final Long schedulerId) {
         Scheduler scheduler = schedulerRepository.findById(schedulerId).orElse(null);
@@ -109,5 +123,16 @@ public class SchedulerController {
             throw new ItemNotFoundException("Scheduler with id " + scheduler.getId());
         }
         return "redirect:/scheduler/" + scheduler.getId();
+    }
+
+    @PostMapping("/scheduler/{schedulerId}/delete")
+    public String deleteScheduler(@PathVariable("schedulerId") final Long schedulerId){
+        Optional<Scheduler> optionalScheduler = schedulerRepository.findById(schedulerId);
+        if (optionalScheduler.isPresent()) {
+            schedulerService.deleteScheduler(schedulerId);
+        } else {
+            throw new ItemNotFoundException("Can't delete scheduler with id " + schedulerId);
+        }
+        return "redirect:/schedulers";
     }
 }
