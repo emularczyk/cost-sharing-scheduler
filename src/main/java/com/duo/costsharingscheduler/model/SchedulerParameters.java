@@ -19,7 +19,7 @@ public class SchedulerParameters {
                 mean = mean.add(scheduler.getRows().get(j).getValueFieldList().get(i).getValueField());
             }
             sumOfColumns.add(sum);
-            meanOfColumns.add(mean.divide(BigDecimal.valueOf(scheduler.getColumns().size()), 2));
+            meanOfColumns.add(mean.divide(BigDecimal.valueOf(scheduler.getRows().size()), 2));
         }
     }
 }
