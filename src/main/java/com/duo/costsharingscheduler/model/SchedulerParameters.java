@@ -1,9 +1,14 @@
 package com.duo.costsharingscheduler.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class SchedulerParameters {
     public List<BigDecimal> sumOfColumns = new ArrayList<>();
     public List<BigDecimal> meanOfColumns = new ArrayList<>();
