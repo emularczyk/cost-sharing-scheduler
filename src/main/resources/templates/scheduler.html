@@ -20,7 +20,8 @@
         <th></th>
         <th th:each="column:${scheduler.columns}">
             <span th:text="${column.title}"/>
-        <th>SUMA</th>
+        <th>Suma</th>
+        <th>Średnia</th>
     </tr>
     </thead>
     <tbody>
@@ -28,27 +29,32 @@
         <td><span th:text="${row.title}"></span></td>
         <td th:each="field:${row.valueFieldList}">
             <span th:text="${field.valueField}"></span></td>
-        <td th:text="${#numbers.formatDecimal(#aggregates.sum(row.valueFieldList.![valueField]), 0, 'POINT', 2, 'POINT')
+        <td class="table-success" th:text="${#numbers.formatDecimal(#aggregates.sum(row.valueFieldList.![valueField]), 0, 'POINT', 2, 'POINT')
         == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.sum(row.valueFieldList.![valueField]), 0, 'POINT', 2, 'POINT')}"></td>
+        <td class="table-danger" th:text="${#numbers.formatDecimal(#aggregates.avg(row.valueFieldList.![valueField]), 0, 'POINT', 2, 'POINT')
+        == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.avg(row.valueFieldList.![valueField]), 0, 'POINT', 2, 'POINT')}"></td>
     </tr>
     </tbody>
 
-    <tr>
+    <tr class="table-success">
         <td>SUMA</td>
         <td th:each="sumOfColumn: ${schedulerParameters.sumOfColumns}">
             <span th:text=${sumOfColumn}/></span>
         </td>
         <td th:text="${#numbers.formatDecimal(#aggregates.sum(schedulerParameters.sumOfColumns), 0, 'POINT', 2, 'POINT')
         == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.sum(schedulerParameters.sumOfColumns), 0, 'POINT', 2, 'POINT')}"></td>
+        <td class="table-danger" th:text="${#numbers.formatDecimal(#aggregates.sum(schedulerParameters.meanOfColumns), 0, 'POINT', 2, 'POINT')
+        == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.sum(schedulerParameters.meanOfColumns), 0, 'POINT', 2, 'POINT')}"></td>
     </tr>
 
-    <tr>
+    <tr class="table-danger">
         <td>ŚREDNIA</td>
         <td th:each="meanOfColumn: ${schedulerParameters.meanOfColumns}">
             <span th:text=${meanOfColumn}/></span>
         </td>
         <td th:text="${#numbers.formatDecimal(#aggregates.sum(schedulerParameters.meanOfColumns), 0, 'POINT', 2, 'POINT')
         == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.sum(schedulerParameters.meanOfColumns), 0, 'POINT', 2, 'POINT')}"></td>
+        <td>x</td>
     </tr>
 </table>
 
