@@ -13,25 +13,49 @@
     <center><span class="text-center" th:text="${scheduler.title}"/></center>
 </h3>
 <hr>
-<table class="table table-bordered table-striped" border="1">
+
+<table class="table table-bordered table-striped custom-table" border="1">
     <thead class="table-dark">
     <tr>
         <th></th>
         <th th:each="column:${scheduler.columns}">
             <span th:text="${column.title}"/>
+        <th>SUMA</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="row:${scheduler.rows}">
         <td><span th:text="${row.title}"></span></td>
         <td th:each="field:${row.valueFieldList}">
-            <span th:text="${field.valueField}"></span>
+            <span th:text="${field.valueField}"></span></td>
+        <td th:text="${#numbers.formatDecimal(#aggregates.sum(row.valueFieldList.![valueField]), 0, 'POINT', 2, 'POINT')
+        == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.sum(row.valueFieldList.![valueField]), 0, 'POINT', 2, 'POINT')}"></td>
     </tr>
     </tbody>
+
+    <tr>
+        <td>SUMA</td>
+        <td th:each="sumOfColumn: ${schedulerParameters.sumOfColumns}">
+            <span th:text=${sumOfColumn}/></span>
+        </td>
+        <td th:text="${#numbers.formatDecimal(#aggregates.sum(schedulerParameters.sumOfColumns), 0, 'POINT', 2, 'POINT')
+        == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.sum(schedulerParameters.sumOfColumns), 0, 'POINT', 2, 'POINT')}"></td>
+    </tr>
+
+    <tr>
+        <td>ŚREDNIA</td>
+        <td th:each="meanOfColumn: ${schedulerParameters.meanOfColumns}">
+            <span th:text=${meanOfColumn}/></span>
+        </td>
+        <td th:text="${#numbers.formatDecimal(#aggregates.sum(schedulerParameters.meanOfColumns), 0, 'POINT', 2, 'POINT')
+        == '.00' ? '0.00' : #numbers.formatDecimal(#aggregates.sum(schedulerParameters.meanOfColumns), 0, 'POINT', 2, 'POINT')}"></td>
+    </tr>
 </table>
+
 <div class="row">
     <div class="col-6">
         <a th:href="@{'/scheduler/edit/'+${scheduler.id}}" class="btn btn-warning">Edytuj</a>
+        <td><a th:href="@{'/schedulers'}" class="btn btn-warning">Strona główna</a></td>
     </div>
     <div class="col-6" align="right">
         <a th:href="@{'/scheduler/'+${scheduler.id}+'/add/row'}" class="btn btn-primary mb-2">
@@ -44,7 +68,7 @@
             Usuń kolumnę</a>
     </div>
 </div>
-<td><a th:href="@{'/schedulers'}" class="btn btn-warning">Strona główna</a></td>
+
 </body>
 
 </html>
