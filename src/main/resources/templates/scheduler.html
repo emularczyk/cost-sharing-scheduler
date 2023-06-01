@@ -66,11 +66,13 @@
     <div class="col-6" align="right">
         <a th:href="@{'/scheduler/'+${scheduler.id}+'/add/row'}" class="btn btn-primary mb-2">
             Dodaj wiersz</a>
-        <a th:href="@{'/scheduler/'+${scheduler.id}+'/remove/row'}" class="btn btn-primary mb-2">
-            Usuń wiersz</a>
         <a th:href="@{'/scheduler/'+${scheduler.id}+'/add/column'}" class="btn btn-primary mb-2">
             Dodaj kolumnę</a>
-        <a th:href="@{'/scheduler/'+${scheduler.id}+'/remove/column'}" class="btn btn-primary mb-2">
+        <a th:if="${#lists.size(scheduler.rows) > 1}" th:href="@{'/scheduler/'+${scheduler.id}+'/remove/row'}"
+           class="btn btn-primary mb-2">
+            Usuń wiersz</a>
+        <a th:if="${#lists.size(scheduler.columns) > 1}" th:href="@{'/scheduler/'+${scheduler.id}+'/remove/column'}"
+           class="btn btn-primary mb-2">
             Usuń kolumnę</a>
     </div>
 </div>
